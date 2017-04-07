@@ -11,9 +11,9 @@ class Sidebar extends Component {
       <div className='sidebar'>
         <Link className='link' activeClassName='link--active' to='/courses'>Курсы</Link>
         <Link className='link' activeClassName='link--active' to='/users'>Пользователи</Link>
-        <Link className='link' activeClassName='link--active' to='/news'>Новости</Link>
-        <Link className='link'>Лекции</Link>
-        <Link className='link'>Контент лекции</Link>
+        <Link className='link' activeClassName='link--active' to='/articles'>Новости</Link>
+        <Link className='link' activeClassName='link--active' to='/lectures'>Лекции</Link>
+        <Link className='link' activeClassName='link--active' to='/lectures_content'>Контент лекции</Link>
         <Link className='link'>Роли</Link>
         <Link className='link'>Права</Link>
         <Link className='link'>Разделы курсов</Link>
