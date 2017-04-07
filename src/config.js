@@ -1,3 +1,9 @@
+import _axios from 'axios'
+
 const API_URL = 'http://localhost:3000'
 
-export default API_URL
+const axios = _axios.create({
+  headers: { 'Authorization': localStorage.getItem('jwt_token') }
+})
+
+export { API_URL, axios }
