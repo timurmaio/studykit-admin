@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-class ListUsers extends Component {
+class ListLectures extends Component {
   render () {
     return (
       <div>
-        Users
+        ListLectures
       </div>
     )
   }
 }
 
-export default ListUsers
+export default ListLectures

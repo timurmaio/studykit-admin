@@ -1,12 +1,6 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
-
-import axios from 'axios'
-import API_URL from '../../config'
-
-const customAxios = axios.create({
-  headers: { 'Authorization': localStorage.getItem('jwt_token') }
-});
+import { API_URL, axios } from '../../../config'
 
 class NewCourse extends Component {
   constructor (props) {
@@ -37,7 +31,7 @@ class NewCourse extends Component {
       }
     }
 
-    customAxios.post(url, data).then((response) => {
+    axios.post(url, data).then((response) => {
       if (response.status === 201) {
         console.log('Курс создан')
         browserHistory.push('/courses')

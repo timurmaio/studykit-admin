@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-
 import _axios from 'axios'
-import API_URL from '../../config'
-
-const axios = _axios.create({
-  headers: { 'Authorization': localStorage.getItem('jwt_token') }
-});
+import { API_URL, axios } from '../../../config'
 
 class ListCourses extends Component {
   constructor (props) {
@@ -49,6 +44,19 @@ class ListCourses extends Component {
     )
   }
 
+  renderCourseItem = (item) => {
+    return (
+      <tr key={item.id}>
+        <td>{item.id}</td>
+        <td>{item.title}</td>
+        <td>{item.description}</td>
+        <td>{item.owner_id}</td>
+        <td><Link to={{ pathname: `courses/${item.id}` }}>Показать</Link></td>
+        <td><button onClick={this.handleDelete.bind(this, item)}>Удалить</button></td>
+      </tr>
+    )
+  }
+
   render () {
     const divStyle = {
       width: '74%'
@@ -56,6 +64,18 @@ class ListCourses extends Component {
 
     return (
       <div style={divStyle}>
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Владелец</th>
+            {/*<th>Аватар</th>*/}
+          </tr>
+          <tbody>
+          {this.state.courses.map(this.renderCourseItem)}
+          </tbody>
+        </table>
         <ul>
           {this.state.courses.map(this.renderCourse)}
         </ul>
@@ -65,4 +85,4 @@ class ListCourses extends Component {
   }
 }
 
-export default ListCourses;
+export default ListCourses

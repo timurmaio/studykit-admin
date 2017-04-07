@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-
-import _axios from 'axios'
-import API_URL from '../../config'
-
-const axios = _axios.create({
-  headers: { 'Authorization': localStorage.getItem('jwt_token') }
-});
+import { API_URL, axios } from '../../../config'
 
 class ShowCourse extends Component {
   constructor (props) {
@@ -17,7 +11,7 @@ class ShowCourse extends Component {
       editable: false,
       error: ''
     }
-    console.log(this.props.params.id)
+    // console.log(this.props.params.id)
   }
 
   componentDidMount () {
