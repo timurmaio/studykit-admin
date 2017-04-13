@@ -2,29 +2,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 
 class Sidebar extends Component {
-  handleSignout () {
-    localStorage.removeItem('jwt_token')
-  }
-
   render () {
     return (
-      <div className='sidebar'>
-        <Link className='link' activeClassName='link--active' to='/courses'>Курсы</Link>
-        <Link className='link' activeClassName='link--active' to='/users'>Пользователи</Link>
-        <Link className='link' activeClassName='link--active' to='/articles'>Новости</Link>
-        <Link className='link' activeClassName='link--active' to='/lectures'>Лекции</Link>
-        <Link className='link' activeClassName='link--active' to='/lectures_content'>Контент лекции</Link>
-        <Link className='link'>Роли</Link>
-        <Link className='link'>Права</Link>
-        <Link className='link'>Разделы курсов</Link>
-        <Link className='link'>Группы</Link>
-        <Link className='link'>Тесты</Link>
-        <Link className='link'>Вопросы</Link>
-        <Link className='link'>Ответы</Link>
-        <Link className='link'>Состояния</Link>
-        <Link className='link'>Изменения</Link>
-        <Link className='link'>Комментарии</Link>
-        <Link className='link' to='/' onClick={this.handleSignout.bind(this)}>Выйти</Link>
+      <div className="sidebar">
+        <nav className="nav flex-column nav-pills">
+          <Link to="/courses" className="nav-link" activeClassName="active">Курсы</Link>
+          <Link to="/users" className="nav-link" activeClassName="active">Пользователи</Link>
+          <Link to="/articles" className="nav-link" activeClassName="active">Новости</Link>
+          <Link to="/lectures" className="nav-link" activeClassName="active">Лекции</Link>
+          <Link to="/lectures_content" className="nav-link" activeClassName="active">Контент лекции</Link>
+        </nav>
       </div>
     )
   }
