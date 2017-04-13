@@ -4,6 +4,7 @@ import { Router, Route, browserHistory } from 'react-router'
 // Components
 import App from './components/App'
 import MainLayout from './components/MainLayout'
+import AuthLayout from './components/AuthLayout'
 import Authentication from './components/Authentication'
 
 // Pages
@@ -39,7 +40,9 @@ const routes = (
   <Router history={browserHistory}>
     <Route component={App}>
 
-      <Route path='/' component={Authentication} />
+      <Route component={AuthLayout}>
+        <Route path='/' component={Authentication} />
+      </Route>
 
       <Route component={MainLayout}>
 
