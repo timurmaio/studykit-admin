@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import _axios from 'axios'
 import { API_URL, axios } from '../../../config'
 
 class ListCourses extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      courses: [{ id: 1, title: 'Wow', description: 'WowWow' }]
+      items: []
     }
   }
 
   componentDidMount () {
     axios.get(API_URL + '/api/admin/courses')
       .then((response) => {
-        this.setState({ courses: response.data })
+        this.setState({ items: response.data })
       })
       .catch((error) => {
         console.log(error);
@@ -25,62 +24,56 @@ class ListCourses extends Component {
     axios.delete(API_URL + '/api/admin/courses/' + item.id).then((response) => {
       if (response.status === 204) {
         console.log('Курс успешно удалён')
-        let newState = this.state.courses
+        let newState = this.state.items
         if (newState.indexOf(item) > -1) {
           newState.splice(newState.indexOf(item), 1)
-          this.setState({ courses: newState })
+          this.setState({ items: newState })
         }
       }
     })
   }
 
-  renderCourse = (item) => {
-    return (
-      <li key={item.id}>
-        Название: {item.title}. Описание: {item.description}
-        <Link to={{ pathname: `courses/${item.id}` }}>Показать</Link>
-        <button onClick={this.handleDelete.bind(this, item)}>Удалить</button>
-      </li>
-    )
-  }
-
-  renderCourseItem = (item) => {
+  renderItem = (item) => {
     return (
       <tr key={item.id}>
-        <td>{item.id}</td>
+        <th scope="row">{item.id}</th>
         <td>{item.title}</td>
         <td>{item.description}</td>
         <td>{item.owner_id}</td>
-        <td><Link to={{ pathname: `courses/${item.id}` }}>Показать</Link></td>
-        <td><button onClick={this.handleDelete.bind(this, item)}>Удалить</button></td>
+        <td>
+          <div className="btn-group btn-group-sm" role="group">
+            <Link to={{ pathname: `courses/${item.id}` }} className="btn btn-outline-info">
+              Показать
+            </Link>
+            <button type="button" className="btn btn-outline-danger" onClick={this.handleDelete.bind(this, item)}>
+              Удалить
+            </button>
+          </div>
+        </td>
       </tr>
     )
   }
 
   render () {
-    const divStyle = {
-      width: '74%'
-    };
-
     return (
-      <div style={divStyle}>
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>Владелец</th>
-            {/*<th>Аватар</th>*/}
-          </tr>
+      <div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Название</th>
+              <th>Описание</th>
+              <th>Владелец</th>
+              <th>Действия</th>
+              {/*<th>Аватар</th>*/}
+            </tr>
+          </thead>
           <tbody>
-          {this.state.courses.map(this.renderCourseItem)}
+            {this.state.items.map(this.renderItem)}
           </tbody>
         </table>
-        <ul>
-          {this.state.courses.map(this.renderCourse)}
-        </ul>
-        < Link to="/courses/new" > Новый</Link >
-      </div >
+        <Link to="/courses/new" className="btn btn-success mt-3">Создать</Link>
+      </div>
     );
   }
 }

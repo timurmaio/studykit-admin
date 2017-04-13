@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 import { API_URL, axios } from '../../../config'
 
 class NewCourse extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       title: '',
@@ -45,17 +45,17 @@ class NewCourse extends Component {
   render () {
     return (
       <div>
-        Новый курс
+        <h3>Новый курс</h3>
         <form>
-          <label>
-            Название
-            <input name='title' type="text" onChange={this.handleInputChange} />
-          </label>
-          <label>
-            Описание
-            <input name='description' type="text" onChange={this.handleInputChange} />
-          </label>
-          <button type='submit' onClick={this.handleSubmit}>Создать</button>
+          <div className="form-group w-50">
+            <label htmlFor="title">Название</label>
+            <input name="title" type="text" className="form-control" onChange={this.handleInputChange} id="title" aria-describedby="emailHelp" placeholder="Название курса" />
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="description">Описание</label>
+            <input name="description" type="text" className="form-control" onChange={this.handleInputChange} id="description" placeholder="Описание курса" />
+          </div>
+          <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Создать</button>
           <span>{this.state.error}</span>
         </form>
       </div>

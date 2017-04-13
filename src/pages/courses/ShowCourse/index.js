@@ -11,7 +11,6 @@ class ShowCourse extends Component {
       editable: false,
       error: ''
     }
-    // console.log(this.props.params.id)
   }
 
   componentDidMount () {
@@ -54,15 +53,23 @@ class ShowCourse extends Component {
   }
 
   render () {
-    const title = this.state.editable ? <input name='title' type='text' defaultValue={this.state.title} onChange={this.handleInputChange} /> : <h3>{this.state.title}</h3>
-    const description = this.state.editable ? <input name='description' type='text' defaultValue={this.state.description} onChange={this.handleInputChange} /> : <h3>{this.state.description}</h3>
-    const button = this.state.editable ? <button type='text' onClick={this.handleEditSubmit}>Сохранить</button> : <button type='text' onClick={this.handleEdit}>Изменить</button>
+    const disabled = this.state.editable ? false : true
+    const button = this.state.editable ? 
+    <button type="submit" className="btn btn-success" onClick={this.handleEditSubmit}>Сохранить</button> 
+    : 
+    <button type="submit" className="btn btn-warning" onClick={this.handleEdit}>Изменить</button>
     return (
       <div>
-        {this.props.params.id}й Курс
+        <h3>{this.props.params.id}й курс</h3>
         <form>
-          <div>{title}</div>
-          <div>{description}</div>
+          <div className="form-group w-50">
+            <label htmlFor="title">Название</label>
+            <input name="title" type="text" className="form-control" value={this.state.title} onChange={this.handleInputChange} id="title" aria-describedby="emailHelp" disabled={disabled} />
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="description">Описание</label>
+            <input name="description" type="text" className="form-control" value={this.state.description} onChange={this.handleInputChange} id="description" disabled={disabled}/>
+          </div>
           {button}
         </form>
       </div>
