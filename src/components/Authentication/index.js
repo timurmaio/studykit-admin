@@ -1,13 +1,30 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
+import styled from 'styled-components';
 import axios from 'axios'
+import { API_URL } from '../../config'
+
+const Input = styled.input`
+  display: block;
+  padding: 5px;
+  font-size: 14px;
+  border: 1px solid grey;
+  border-radius: 4px;
+  width: 100%;
+`
+
+const Form = styled.form`
+  margin: auto;
+  width: 250px;
+`
 
 class Authentication extends Component {
   constructor (props) {
     super(props)
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      error: ''
     }
   }
 
@@ -28,7 +45,7 @@ class Authentication extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
 
-    const url = 'http://localhost:3000/api/users/login'
+    const url = API_URL + '/api/users/login'
 
     const userData = {
       user: {
@@ -37,7 +54,9 @@ class Authentication extends Component {
       }
     }
 
-    axios.post(url, userData).then(function (response) {
+    // const _this = this
+
+    axios.post(url, userData).then((response) => {
       if (response.status === 200) {
         console.log('Мы вошли!')
         const jwt_token = response.data.jwt_token
@@ -45,25 +64,29 @@ class Authentication extends Component {
         localStorage.setItem('jwt_token', jwt_token)
         browserHistory.push('/courses')
       }
-    }).catch(function (error) {
+    }).catch((error) => {
       console.log(error)
+      this.setState({error: error})
       console.log('Введены неверные данные')
     })
   }
 
   render () {
+    const error = this.state.error ? this.state.error.toString() : undefined
     return (
-      <form>
-        <label>
-          Username:
-          <input name='email' type='text' onChange={this.handleInputChange} />
-        </label>
-        <label>
-          Password:
-          <input name='password' type='password' onChange={this.handleInputChange} />
-        </label>
-        <button type='submit' onClick={this.handleSubmit}>Submit</button>
-      </form>
+      <Form>
+
+        <label>Пользователь:</label>
+        <Input placeholder="Введите пользователя" type="text" name="email" onChange={this.handleInputChange} />
+
+        <label>Пароль:</label>
+        <Input placeholder="Введите пароль" type="password" name="password" onChange={this.handleInputChange} />
+        
+        <div>{error}</div>
+        
+        <button type='submit' onClick={this.handleSubmit}>Войти</button>
+
+      </Form>
     )
   }
 }
