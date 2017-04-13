@@ -1,52 +1,7 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
-
-.container {
-  width: 1140px;
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  padding-right: 15px;
-  padding-left: 15px;
-  max-width: 100%;
-}
-
-.header {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  background-image: linear-gradient(-198deg, #FF9944 0%, #FC6076 100%);
-  color: white;
-}
-
 .sidebar {
-  list-style: none;
-  width: 15%;
+  position: fixed;
 }
 
-.link {
-  /*padding: 10px;*/
-  /*margin: 10px;*/
-  display: block;
-  padding: 5px 20px;
-}
-
-.link:hover {
-  background-color: black;
-  color: white;
-}
-/*.sibebar:last-child:hover {*/
-  /*background-color: red;*/
-
-/*}*/
-/*link:last-child:hover{*/
-/*}*/
-
-.link--active {
-  background-color: gray;
-  color: white;
+tbody > tr:hover {
+  background-color: #f5f5f5;
 }
