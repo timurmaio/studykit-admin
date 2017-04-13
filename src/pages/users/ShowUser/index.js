@@ -11,7 +11,7 @@ class ShowUser extends Component {
       password: '',
       role: '',
       avatar: '',
-      avatarPreviewUrl:'',
+      avatarURL:'',
       editable: false,
       error: ''
     }
@@ -22,7 +22,7 @@ class ShowUser extends Component {
     axios.get(API_URL + '/api/admin/users/' + this.props.params.id).then((response) => {
       const item = response.data
       console.log(response.data)
-      this.setState({ firstName: item.first_name, lastName: item.last_name, email: item.email, password: item.password, role: item.role, avatar: item.avatar })
+      this.setState({ firstName: item.first_name, lastName: item.last_name, email: item.email, password: item.password, role: item.role, avatarURL: item.avatar })
     })
   }
 
@@ -38,12 +38,15 @@ class ShowUser extends Component {
     if (name === 'avatar') {
       let reader = new FileReader()
       let file = event.target.files[0]
+      console.log(file)
 
-      reader.onloadend = () => {
-        this.setState({
-          avatar: file,
-          avatarPreviewUrl: reader.result
-        })
+        reader.onloadend = () => {
+      if (reader.result) {
+          this.setState({
+            avatar: file,
+            avatarURL: reader.result
+          })
+        }
       }
       reader.readAsDataURL(file)
     } else {
@@ -56,16 +59,23 @@ class ShowUser extends Component {
     event.preventDefault()
     const url = API_URL + '/api/admin/users/' + + this.props.params.id
 
+
     const data = {
       user: {
         first_name: this.state.firstName,
         last_name: this.state.lastName,
         email: this.state.email,
         password: this.state.password,
-        role: this.state.role,
-        avatar: this.state.avatar
+        role: this.state.role
+        // avatar: this.state.avatarURL
       }
     }
+
+    if (this.state.avatar) {
+      data.user.avatar = this.state.avatarURL
+    }
+
+    console.log(data)
 
     axios.put(url, data).then((response) => {
       console.log(response)
@@ -80,23 +90,47 @@ class ShowUser extends Component {
   }
 
   render () {
-    const firstName = this.state.editable ? <input name='firstName' type='text' defaultValue={this.state.firstName} onChange={this.handleInputChange} /> : <h3>{this.state.firstName}</h3>
-    const lastName = this.state.editable ? <input name='lastName' type='text' defaultValue={this.state.lastName} onChange={this.handleInputChange} /> : <h3>{this.state.lastName}</h3>
-    const email = this.state.editable ? <input name='email' type='text' defaultValue={this.state.email} onChange={this.handleInputChange} /> : <h3>{this.state.email}</h3>
-    const password = this.state.editable ? <input name='password' type='text' defaultValue={this.state.password} onChange={this.handleInputChange} /> : <h3>{this.state.password}</h3>
-    const role = this.state.editable ? <input name='role' type='text' defaultValue={this.state.role} onChange={this.handleInputChange} /> : <h3>{this.state.role}</h3>
-    const avatar = this.state.editable ? <input name='avatar' type='file' defaultValue={this.state.avatar} onChange={this.handleInputChange} onClick={this.handleClick} /> : <img src={this.state.avatar} />
-    const button = this.state.editable ? <button type='text' onClick={this.handleEditSubmit}>Сохранить</button> : <button type='text' onClick={this.handleEdit}>Изменить</button>
+    const { editable } = this.state;
+    const disabled = editable ? false : true
+
+    const button = editable ? 
+    <button type="submit" className="btn btn-success" onClick={this.handleEditSubmit}>Сохранить</button> 
+    : 
+    <button type="submit" className="btn btn-warning" onClick={this.handleEdit}>Изменить</button>
+
+    const avatar = editable ? 
+    <input name='avatar' type='file' className="form-control-file" onChange={this.handleInputChange} /> 
+    : 
+    <img src={this.state.avatarURL} className="img-thumbnail" width="100px" />
     return (
       <div>
-        {this.props.params.id}й Пользователь
+        <h3>{this.props.params.id}й пользователь</h3>
         <form>
-          <div>{firstName}</div>
-          <div>{lastName}</div>
-          <div>{email}</div>
-          <div>{password}</div>
-          <div>{avatar}</div>
-          <div>{role}</div>
+          <div className="form-group w-50">
+            <label htmlFor="title">Имя</label>
+            <input name="firstName" type="text" className="form-control" value={this.state.firstName} onChange={this.handleInputChange} id="title" disabled={disabled}/>
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="description">Фамилия</label>
+            <input name="lastName" type="text" className="form-control" value={this.state.lastName} onChange={this.handleInputChange} id="description" disabled={disabled}/>
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="description">Электронная почта</label>
+            <input name="email" type="text" className="form-control" value={this.state.email} onChange={this.handleInputChange} id="description" disabled={disabled}/>
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="password">Пароль</label>
+            <input name="password" type="text" className="form-control" value={this.state.password} onChange={this.handleInputChange} id="description" disabled={disabled}/>
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="password">Роль</label>
+            <input name="role" type="text" className="form-control" value={this.state.role} onChange={this.handleInputChange} id="description" disabled={disabled}/>
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="password">Аватар</label>
+            <div>{avatar}</div>
+          </div>
+
           {button}
         </form>
       </div>

@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 import { API_URL, axios } from '../../../config'
 
 class NewUser extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       firstName: '',
@@ -70,33 +70,33 @@ class NewUser extends Component {
   render () {
     return (
       <div>
-        Новый курс
+        <h3>Новый пользователь</h3>
         <form>
-          <label>
-            Имя
-            <input name='firstName' type="text" onChange={this.handleInputChange} />
-          </label>
-          <label>
-            Фамилия
-            <input name='lastName' type="text" onChange={this.handleInputChange} />
-          </label>
-          <label>
-            Электронная почта
-            <input name='email' type="text" onChange={this.handleInputChange} />
-          </label>
-          <label>
-            Пароль
-            <input name='password' type="text" onChange={this.handleInputChange} />
-          </label>
-          <label>
-            Роль
-            <input name='role' type="text" onChange={this.handleInputChange} />
-          </label>
-          <label>
-            Аватар
-            <input name='avatar' type="file" onChange={this.handleImageChange} />
-          </label>
-          <button type='submit' onClick={this.handleSubmit}>Создать</button>
+          <div className="form-group w-50">
+            <label htmlFor="title">Имя</label>
+            <input name="firstName" type="text" className="form-control" onChange={this.handleInputChange} id="title" aria-describedby="emailHelp" placeholder="" />
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="description">Фамилия</label>
+            <input name="lastName" type="text" className="form-control" onChange={this.handleInputChange} id="description" placeholder="" />
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="description">Электронная почта</label>
+            <input name="email" type="text" className="form-control" onChange={this.handleInputChange} id="description" placeholder="" />
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="password">Пароль</label>
+            <input name="password" type="text" className="form-control" onChange={this.handleInputChange} id="description" placeholder="" />
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="password">Роль</label>
+            <input name="role" type="text" className="form-control" onChange={this.handleInputChange} id="description" placeholder="" />
+          </div>
+          <div className="form-group w-50">
+            <label htmlFor="password">Аватар</label>
+            <input name="avatar" type="file" className="form-control-file" onChange={this.handleImageChange} id="description" placeholder="" />
+          </div>
+          <button type="submit" className="btn btn-primary" onClick={this.handleSubmit}>Создать</button>
           <span>{this.state.error}</span>
         </form>
       </div>

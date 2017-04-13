@@ -4,37 +4,17 @@ import _axios from 'axios'
 import { API_URL, axios } from '../../../config'
 
 class ListUsers extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      users: [{
-        // id: '',
-        // firstName: '',
-        // lastName: '',
-        // email: '',
-        // password: '',
-        // role: '',
-        // avatar: ''
-      }]
+      items: []
     }
   }
 
   componentDidMount () {
     axios.get(API_URL + '/api/admin/users')
       .then((response) => {
-        // let usersData = this.state.users
-        // let i = 0
-        // response.data.forEach((item) => {
-        //   usersData[i].id = item.id
-        //   usersData[i].firstName = item.first_name
-        //   usersData[i].lastName = item.last_name
-        //   usersData[i].email = item.email
-        //   usersData[i].password = item.password
-        //   usersData[i].role = item.avatar
-        //   i++
-        // })
-        console.log(response.data)
-        this.setState({ users: response.data })
+        this.setState({ items: response.data })
       })
       .catch((error) => {
         console.log(error);
@@ -45,43 +25,60 @@ class ListUsers extends Component {
     axios.delete(API_URL + '/api/admin/users/' + item.id).then((response) => {
       if (response.status === 204) {
         console.log('Пользователь успешно удалён')
-        let newState = this.state.users
+        let newState = this.state.items
         if (newState.indexOf(item) > -1) {
           newState.splice(newState.indexOf(item), 1)
-          this.setState({ users: newState })
+          this.setState({ items: newState })
         }
       }
     })
   }
 
-  renderUser = (item) => {
-    // console.log(item.id)
+  renderItem = (item) => {
     return (
-      <li key={item.id}>
-        Имя: {item.first_name}.
-        Фамилия: {item.last_name}.
-        {/*Фамилия: {item.last_name}.*/}
-        email: {item.email}.
-        password: {item.password}.
-        role: {item.role}.
-        avatar: {item.avatar}.
-        <Link to={{ pathname: `users/${item.id}` }}>Показать</Link>
-        <button onClick={this.handleDelete.bind(this, item)}>Удалить</button>
-      </li>
+      <tr key={item.id}>
+        <td scope="row">{item.id}</td>
+        <td>{item.first_name}</td>
+        <td>{item.last_name}</td>
+        <td>{item.email}</td>
+        <td>{item.password}</td>
+        <td>{item.role}</td>
+        <td><img src={item.avatar} width="40px" alt="img" /></td>
+        <td>
+          <div className="btn-group btn-group-sm" role="group">
+            <Link to={{ pathname: `users/${item.id}` }} className="btn btn-outline-info">
+              Показать
+            </Link>
+            <button type="button" className="btn btn-outline-danger" onClick={this.handleDelete.bind(this, item)}>
+              Удалить
+            </button>
+          </div>
+        </td>
+      </tr>
     )
   }
 
   render () {
-    const divStyle = {
-      width: '74%'
-    };
-
     return (
-      <div style={divStyle}>
-        <ul>
-          {this.state.users.map(this.renderUser)}
-        </ul>
-        <Link to="/users/new"> Новый</Link>
+      <div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Имя</th>
+              <th>Фамилия</th>
+              <th>Email</th>
+              <th>Пароль</th>
+              <th>Роль</th>
+              <th>Аватар</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.items.map(this.renderItem)}
+          </tbody>
+        </table>
+        <Link to="/users/new" className="btn btn-success mt-3"> Новый</Link>
       </div >
     );
   }
