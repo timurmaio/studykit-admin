@@ -11,9 +11,10 @@ class ListLecturesContent extends Component {
   }
 
   componentDidMount () {
-    axios.get(API_URL + '/api/admin/lectures_content')
+    axios.get(API_URL + '/api/admin/course_contents')
       .then((response) => {
         this.setState({ items: response.data })
+        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
@@ -34,15 +35,15 @@ class ListLecturesContent extends Component {
   }
 
   renderItem = (item) => {
-    return (
+    if (item) return (
       <tr key={item.id}>
         <th scope="row">{item.id}</th>
         <td>{item.title}</td>
-        <td>{item.description}</td>
-        <td>{item.owner_id}</td>
+        <td>{item.body}</td>
+        <td>{item.course_id}</td>
         <td>
           <div className="btn-group btn-group-sm" role="group">
-            <Link to={{ pathname: `lectures_content/${item.id}` }} className="btn btn-outline-info">
+            <Link to={{ pathname: `course_contents/${item.id}` }} className="btn btn-outline-info">
               Показать
             </Link>
             <button type="button" className="btn btn-outline-danger" onClick={this.handleDelete.bind(this, item)}>
@@ -62,8 +63,8 @@ class ListLecturesContent extends Component {
             <tr>
               <th>ID</th>
               <th>Название</th>
-              <th>Описание</th>
-              <th>Владелец</th>
+              <th>Тело</th>
+              <th>ID курса</th>
               <th>Действия</th>
               {/*<th>Аватар</th>*/}
             </tr>
@@ -72,7 +73,7 @@ class ListLecturesContent extends Component {
             {this.state.items.map(this.renderItem)}
           </tbody>
         </table>
-        <Link to="/lectures_content/new" className="btn btn-success mt-3">Новый</Link>
+        <Link to="/course_contents/new" className="btn btn-success mt-3">Новый</Link>
       </div>
     );
   }

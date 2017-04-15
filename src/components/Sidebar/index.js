@@ -10,7 +10,7 @@ class Sidebar extends Component {
           <Link to="/users" className="nav-link" activeClassName="active">Пользователи</Link>
           <Link to="/articles" className="nav-link" activeClassName="active">Новости</Link>
           <Link to="/lectures" className="nav-link" activeClassName="active">Лекции</Link>
-          <Link to="/lectures_content" className="nav-link" activeClassName="active">Контент лекции</Link>
+          <Link to="/course_contents" className="nav-link" activeClassName="active">Контент лекции</Link>
         </nav>
       </div>
     )

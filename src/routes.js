@@ -62,9 +62,9 @@ const routes = (
         <Route path='/lectures/new' component={NewLecture} />
         <Route path='/lectures/:id' component={ShowLecture} />
 
-        <Route path='/lectures_content' component={ListLecturesContent} />
-        <Route path='/lectures_content/new' component={NewLecturesContent} />
-        <Route path='/lectures_content/:id' component={ShowLecturesContent} />
+        <Route path='/course_contents' component={ListLecturesContent} />
+        <Route path='/course_contents/new' component={NewLecturesContent} />
+        <Route path='/course_contents/:id' component={ShowLecturesContent} />
 
         {/* <Route path='/test' component={ImageUpload}/> */}
 
